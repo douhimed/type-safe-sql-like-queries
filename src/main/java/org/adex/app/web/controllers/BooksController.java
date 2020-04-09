@@ -24,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 class BooksController {
 
 	private final BookRepositorySpringDataSpecifications bookRepositorySpringDataSpecifications;
-	//private final BookRepositorySpringDataJPA bookRepositorySpringDataJPA;
+	private final BookRepositorySpringDataJPA bookRepositorySpringDataJPA;
 	private final BookSpecification specification;
 	private final BookSpecificatinBuilder builder;
 
@@ -50,6 +50,11 @@ class BooksController {
 		return new ResponseEntity<List<Book>>(
 				this.bookRepositorySpringDataSpecifications.findAll(builder.with("title", ":", title).with("yearPublished", ">=", year, true).buildSpecification()),
 				HttpStatus.OK);
+	}
+	
+	@GetMapping("title/{title}")
+	public ResponseEntity<?> fetchByTitleLikeOrYearGreatherOrEqualUsingExpressions(@PathVariable String title, @PathVariable int year) {
+		return new ResponseEntity<Iterable<Book>>(this.bookRepositorySpringDataJPA.findAll(builder.with("title", ":-", title).buildBooleanExpressions()),HttpStatus.OK);
 	}
 	
 	
