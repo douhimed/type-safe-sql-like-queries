@@ -16,4 +16,6 @@ public class SearchCriteria {
 	private Object value;
 	@Builder.Default
 	private boolean isOr = false;
+	@Builder.Default
+	private ValueTypes type= ValueTypes.STRING;
 }

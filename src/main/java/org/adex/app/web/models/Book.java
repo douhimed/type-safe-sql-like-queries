@@ -1,4 +1,4 @@
-package org.adex.app.models;
+package org.adex.app.web.models;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
