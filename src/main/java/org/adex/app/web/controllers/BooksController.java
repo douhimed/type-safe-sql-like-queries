@@ -6,9 +6,7 @@ import org.adex.app.web.models.Book;
 import org.adex.app.querydsl.utilities.BookSpecificatinBuilder;
 import org.adex.app.querydsl.utilities.BookSpecification;
 import org.adex.app.querydsl.utilities.SearchCriteria;
-import org.adex.app.repositories.BookRepositorySpringDataJPA;
 import org.adex.app.repositories.BookRepositorySpringDataSpecifications;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -24,7 +22,6 @@ import lombok.RequiredArgsConstructor;
 class BooksController {
 
 	private final BookRepositorySpringDataSpecifications bookRepositorySpringDataSpecifications;
-	private final BookRepositorySpringDataJPA bookRepositorySpringDataJPA;
 	private final BookSpecification specification;
 	private final BookSpecificatinBuilder builder;
 
@@ -51,11 +48,5 @@ class BooksController {
 				this.bookRepositorySpringDataSpecifications.findAll(builder.with("title", ":", title).with("yearPublished", ">=", year, true).buildSpecification()),
 				HttpStatus.OK);
 	}
-	
-	@GetMapping("title/{title}")
-	public ResponseEntity<?> fetchByTitleLikeOrYearGreatherOrEqualUsingExpressions(@PathVariable String title, @PathVariable int year) {
-		return new ResponseEntity<Iterable<Book>>(this.bookRepositorySpringDataJPA.findAll(builder.with("title", ":-", title).buildBooleanExpressions()),HttpStatus.OK);
-	}
-	
-	
+		
 }
